@@ -9,8 +9,10 @@ export const createSessionBody = z
   })
   .strict()
   .refine((body) => body.endTime.getTime() > body.startTime.getTime(), {
-    message: 'endTime must be greater than startTime',
+    error: 'endTime must be greater than startTime',
     path: ['endTime'],
+    // Only compare once both fields parsed cleanly; otherwise the refinement would run on raw input.
+    when: (payload) => payload.issues === undefined || payload.issues.length === 0,
   });
 
 export const availableSessionsQuery = z.object({ dateTimestamp: timestampString }).strict();

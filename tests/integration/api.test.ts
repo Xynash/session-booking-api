@@ -128,6 +128,19 @@ describe('API 2 - POST /sessions', () => {
     }
   });
 
+  it.each([
+    ['garbage startTime', { startTime: 'tomorrow', endTime: at(0, 11) }],
+    ['garbage endTime', { startTime: at(0, 10), endTime: 'later' }],
+    ['both garbage', { startTime: 'x', endTime: 'y' }],
+    ['numeric dates', { startTime: 1790000000000, endTime: 1790003600000 }],
+    ['missing dates', {}],
+  ])('answers 400 (never 500) for %s', async (_label, dates) => {
+    const teacher = await createTeacher();
+    const res = await request(app).post('/sessions').send({ teacherId: teacher._id, ...dates });
+    expect(res.status).toBe(400);
+    expect(res.body.error.code).toBe('VALIDATION_ERROR');
+  });
+
   it('returns 404 when the teacher does not exist', async () => {
     const res = await request(app).post('/sessions').send({ teacherId: OBJECT_ID_THAT_DOES_NOT_EXIST, startTime: at(0, 10), endTime: at(0, 11) });
     expect(res.status).toBe(404);

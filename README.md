@@ -103,7 +103,7 @@ tests/          unit + integration (in-memory MongoDB)
 
 ## Testing
 
-`npm test` runs 67 tests: date-range maths, schema contracts, error mapping, Postman sync, and an integration suite that exercises all six APIs against a real in-memory MongoDB, including concurrent booking, concurrent duplicate signup, injection attempts, malformed/oversized payloads and header checks. The first run downloads a MongoDB binary (cached afterwards).
+`npm test` runs 72 tests: date-range maths, schema contracts, error mapping, Postman sync, and an integration suite that exercises all six APIs against a real in-memory MongoDB, including concurrent booking, concurrent duplicate signup, injection attempts, malformed/oversized payloads and header checks. The first run downloads a MongoDB binary (cached afterwards).
 
 ### Postman
 

@@ -4,9 +4,8 @@ import { isValidTimestamp } from '../utils/dateRange';
 export const objectId = z.string().regex(/^[0-9a-fA-F]{24}$/, 'Must be a valid 24-character ObjectId');
 
 /** Strict ISO-8601 date-time (e.g. 2026-12-01T10:00:00Z). Ambiguous formats are rejected on purpose. */
-export const isoDateTime = z
-  .string()
-  .datetime({ offset: true, message: 'Must be an ISO-8601 date-time, e.g. 2026-12-01T10:00:00Z' })
+export const isoDateTime = z.iso
+  .datetime({ offset: true, error: 'Must be an ISO-8601 date-time, e.g. 2026-12-01T10:00:00Z' })
   .transform((value) => new Date(value));
 
 export const idParams = z.object({ id: objectId }).strict();
